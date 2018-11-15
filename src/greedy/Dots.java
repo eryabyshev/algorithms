@@ -11,7 +11,7 @@ public class Dots {
         int left;
         int right;
 
-        public Section(int left, int right) {
+        public Section(int left , int right) {
             this.left = left;
             this.right = right;
         }
@@ -21,18 +21,19 @@ public class Dots {
     private static Scanner in = new Scanner(System.in);
 
 
-    private static int getNextNotCrossSelection(int from, List<Section> list){
+    private static List<Integer> cross(List<Section> sections){
+        List<Integer> dots = new ArrayList<>();
 
-        int minPoint = list.get(from).right;
-
-        for(int i = from + 1; i < list.size(); i++){
-            if(list.get(i).left >= minPoint)
-                return i;
+        for(int i = 0; i < sections.size(); i++){
+            int point = sections.get(i).right;
+            for(int j = i; j < sections.size() && point <= sections.get(j).right && point >= sections.get(j).left; j++){
+                i = j;
+            }
+            dots.add(point);
         }
-        return -1;
-
-
+        return dots;
     }
+
 
     public static void main(String[] args) {
         int count = in.nextInt();
@@ -40,27 +41,9 @@ public class Dots {
         for(int i = 0; i < count; i++)
             sections.add(new Section(in.nextInt(), in.nextInt()));
 
-        Collections.sort(sections, (a, b) -> Integer.compare(a.right, b.right));
-        Set<Integer>dots = new TreeSet<>();
-
-        //do reliable step
-        dots.add(sections.get(0).right);
-
-        for(int i = 0; i < sections.size(); i++){
-            int nextSelection = getNextNotCrossSelection(i, sections);
-            if(nextSelection != -1){
-                dots.add(sections.get(nextSelection).left);
-                i = nextSelection;
-            }
-
-        }
-
+        Collections.sort(sections, (a, b) -> Long.compare(a.right, b.right));
+        List<Integer>dots = cross(sections);
         System.out.println(dots.size());
-        dots.forEach(e -> System.out.print(e + " "));
-
-
+        dots.forEach(e-> System.out.print(e + " "));
     }
-
-
-
 }
