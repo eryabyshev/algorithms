@@ -1,3 +1,6 @@
+/**
+ * @link https://stepik.org/lesson/13238/step/10?unit=3424
+ */
 package greedy;
 
 import java.util.ArrayList;
@@ -8,51 +11,44 @@ import java.util.Scanner;
 public class Backpack {
 
     private static class CostWeight {
-        int cost;
-        int weight;
+        double cost;
+        double weight;
 
-        public CostWeight(int cost, int weight) {
+        public CostWeight(double cost, double weight) {
             this.cost = cost;
             this.weight = weight;
         }
     }
 
-    public static double round(double value, int places) {
-        if (places < 0)
-            throw new IllegalArgumentException();
-
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
-    }
 
     private static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        int counter = in.nextInt();
-        int weight = in.nextInt();
+        int item_counter = in.nextInt();
+        int bag_weight = in.nextInt();
 
         List<CostWeight> list = new ArrayList<>();
-        for (int i = 0; i < counter; i++) {
-            list.add(new CostWeight(in.nextInt(), in.nextInt()));
+        for (int i = 0; i < item_counter; i++) {
+            list.add(new CostWeight(in.nextDouble(), in.nextDouble()));
         }
-        Collections.sort(list, (a, b) -> Double.compare(a.cost / a.weight, b.cost / b.weight));
+        Collections.sort(list, (a, b) -> Double.compare(b.cost / b.weight, a.cost / a.weight));
 
         double cost = 0.0;
-        int i = 0;
-        while (weight > 0) {
 
-            CostWeight cw = list.get(i);
-            if (weight < list.get(i).weight) {
-                cost = +(double) weight * (double) cw.cost / (double) cw.weight;
-                weight = 0;
-            } else {
-                cost += (double) cw.cost;
-                weight -= cw.weight;
+        for(int i = 0; i < item_counter && bag_weight > 0; i++){
+            CostWeight item = list.get(i);
+
+            if(bag_weight > item.weight){
+                cost += item.cost;
+                bag_weight -= item.weight;
+            }
+            else{
+                cost += (item.cost / item.weight) * bag_weight;
+                bag_weight = 0;
             }
         }
+
         String result = String.format("%.3f", cost);
         System.out.println(result);
     }
