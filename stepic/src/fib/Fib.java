@@ -7,8 +7,6 @@ import java.util.Scanner;
 public class Fib {
     public static void main(String[] args) {
 
-        System.out.println((13 + 21) % 10);
-
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
 
