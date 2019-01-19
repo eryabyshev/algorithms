@@ -1,5 +1,6 @@
 package thirty.days.of.code.Day1;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class DataTypes {
@@ -13,6 +14,8 @@ public class DataTypes {
         while (scan.hasNext())
             line3 += scan.nextLine() + " ";
         double temp = line1 + line2;
+
+
 
         System.out.println((int)temp);
         System.out.println(String.format("%.1f", line2 * 2));
