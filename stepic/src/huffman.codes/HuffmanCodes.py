@@ -77,8 +77,11 @@ def doThree(nodeList):
     return nodeList
 
 
-def printCodesForEachLetter(root, letter):
-    pass
+def getCodeTable(list):
+    if(len(list[0].getValue()) == 1):
+        return {list[0].getValue(): 0}
+    return searchInThree(list[0])
+
 
 
 def visitNode(node, code, map, pref):
@@ -107,13 +110,22 @@ def searchInThree(root, code=[], map = {}):
         map = searchInThree(node.getParentNode(), code, map)
     return map
 
+def replaceLetterOnCode(word, codes):
+    result = ''
+    for i in word:
+        result += str(codes[i])
+    return result
+
+def printResult(word, codes, codesWord):
+    print(len(set(word)), len(codesWord))
+    for key, value in codes.items():
+        print('{0}: {1}'.format(key, value))
+    print(codesWord)
+
+
 word = input()
-three = doThree(convertDictToList(frequency(word)))
-map = searchInThree(three[0])
-a = 10
+codes = getCodeTable(doThree(convertDictToList(frequency(word))))
+codesWord = replaceLetterOnCode(word, codes)
+printResult(word, codes, codesWord)
 
-#list = sorted(convertDictToList(frequency(word)), key=lambda x: x.getPrice(), reverse=True)
-
-# for i in list:
-#     i.print()
 
