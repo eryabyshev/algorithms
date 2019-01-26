@@ -14,35 +14,27 @@ class Heap:
     def __init__(self):
         self.__array = []
 
-    def __left_sone(self, i):
-        return 2 * i + 1
-
-    def __right_sone(self, i):
-        return self.__left_sone(i) + 1
-
     def __sift_down(self, i):
-        while self.__left_sone(i) < len(self.__array):
-            left = self.__left_sone(i)
-            right = self.__right_sone(i)
+        while 2 * i + 1 < len(self.__array):
+            left = 2 * i + 1
+            right = 2 * i + 2
             j = left
-            if right > len(self.__array) and self.__array[right] > self.__array[left]:
+            if right < len(self.__array) and self.__array[right] > self.__array[left]:
                 j = right
             if self.__array[i] >= self.__array[j]:
                 break
-            self.__swap(self.__array[i], self.__array[j])
+            self.__swap(i, j)
             i = j
 
     def __sift_up(self, i):
         while self.__array[i] > self.__array[int((i - 1) / 2)]:
-            temp = self.__array[int((i - 1) / 2)]
-            self.__array[int((i - 1)) / 2] = self.__array[i]
-            self.__array[int((i - 1)) / 2] = temp
+            self.__swap(int((i - 1) / 2), i)
             i = int((i - 1) / 2)
 
     def __swap(self, a, b):
-        temp = b
-        b = a
-        a = temp
+        temp = self.__array[a]
+        self.__array[a] = self.__array[b]
+        self.__array[b] = temp
 
     def __insert(self, element):
         element = int(element)
@@ -74,3 +66,14 @@ def main():
 
 
 main()
+
+# 9
+# Insert 53
+# Insert 7
+# Insert 22
+# Insert 6
+# Insert 5
+# Insert 21
+# Insert 20
+# ExtractMax
+# ExtractMax
