@@ -33,6 +33,8 @@ class ListNode(var `val`: Int) {
     }
 }
 
+fun IntArray.prettyPrint() = this.joinToString(",", "[", "]")
+
 //@link https://leetcode.com/problems/palindrome-linked-list/solution/
 
 class Solution {
